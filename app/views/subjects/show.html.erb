@@ -1,0 +1,83 @@
+<% content_for :title, "#{@subject.name} (#{@subject.code}) — Uni GGR" %>
+
+<div class="landing">
+  <%= render "shared/header" %>
+
+  <main id="top">
+    <section class="subject-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <%= link_to "Home", root_path %>
+          <span aria-hidden="true">/</span>
+          <%= link_to "Subjects", root_path(anchor: "subjects") %>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page"><%= @subject.code %></span>
+        </nav>
+
+        <div class="subject-tags">
+          <span class="subject-code"><%= @subject.code %></span>
+          <span class="subject-type"><%= @subject.elective? ? "Elective" : "Core" %></span>
+        </div>
+        <h1><%= @subject.name %></h1>
+        <p class="lede"><%= @subject.overview %></p>
+      </div>
+    </section>
+
+    <section class="section subject-body">
+      <div class="container subject-layout">
+        <div class="subject-main">
+          <h2>Syllabus topics</h2>
+          <ol class="topic-list">
+            <% @subject.topics.each do |topic| %>
+              <li><%= topic %></li>
+            <% end %>
+          </ol>
+
+          <h2>Leading cases</h2>
+          <ul class="case-list">
+            <% @subject.cases.each do |kase| %>
+              <li class="case-item">
+                <p class="case-name"><%= kase[:name] %> <span class="case-year">(<%= kase[:year] %>)</span></p>
+                <p class="case-point"><%= kase[:point] %></p>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <aside class="subject-side">
+          <div class="side-card">
+            <h2>Key statutes</h2>
+            <% if @subject.statutes.any? %>
+              <ul class="statute-list">
+                <% @subject.statutes.each do |statute| %>
+                  <li><%= statute %></li>
+                <% end %>
+              </ul>
+            <% else %>
+              <p class="muted">This is a theory subject — focus on jurists, schools of thought and concepts rather than a single statute.</p>
+            <% end %>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <nav class="subject-pager container" aria-label="Other subjects">
+      <% if (prev_subject = @subject.previous) %>
+        <%= link_to subject_path(prev_subject), class: "pager-link" do %>
+          <span class="pager-dir">← Previous</span>
+          <span class="pager-name"><%= prev_subject.name %></span>
+        <% end %>
+      <% else %>
+        <span></span>
+      <% end %>
+      <% if (next_subject = @subject.next) %>
+        <%= link_to subject_path(next_subject), class: "pager-link pager-next" do %>
+          <span class="pager-dir">Next →</span>
+          <span class="pager-name"><%= next_subject.name %></span>
+        <% end %>
+      <% end %>
+    </nav>
+  </main>
+
+  <%= render "shared/footer" %>
+</div>

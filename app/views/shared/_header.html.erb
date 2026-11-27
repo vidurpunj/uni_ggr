@@ -1,0 +1,24 @@
+<header class="site-header" data-controller="nav">
+  <div class="container header-inner">
+    <a href="<%= root_path %>" class="brand">
+      <span class="brand-mark" aria-hidden="true">§</span>
+      <span>Uni GGR</span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false"
+            data-action="nav#toggle" data-nav-target="button">
+      <span class="sr-only">Toggle menu</span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" data-nav-target="menu" data-action="click->nav#close">
+      <a href="<%= root_path(anchor: "subjects") %>">Subjects</a>
+      <a href="<%= root_path(anchor: "datesheet") %>">Datesheet</a>
+      <a href="<%= root_path(anchor: "features") %>">Resources</a>
+      <a href="<%= root_path(anchor: "how") %>">How it works</a>
+      <a href="<%= root_path(anchor: "start") %>" class="btn btn-small">Get started</a>
+    </nav>
+  </div>
+</header>

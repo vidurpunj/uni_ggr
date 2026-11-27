@@ -1,0 +1,147 @@
+<% content_for :title, "Uni GGR — LLB Semester III Study Hub" %>
+
+<div class="landing">
+  <%= render "shared/header" %>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">LLB · Semester III</p>
+          <h1>Everything you need for third semester law, in one place.</h1>
+          <p class="lede">
+            Structured notes, case briefs, and past papers for every subject on the syllabus —
+            organised so you can stop searching and start revising.
+          </p>
+          <div class="hero-actions">
+            <a href="#subjects" class="btn">Browse subjects</a>
+            <a href="#how" class="btn btn-ghost">How it works</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Case brief example">
+          <p class="card-label">Case brief</p>
+          <h2 class="card-title">Maneka Gandhi v. Union of India</h2>
+          <p class="card-cite">(1978) 1 SCC 248</p>
+          <dl class="brief">
+            <div><dt>Issue</dt><dd>Does Article 21 require procedure to be fair, just and reasonable?</dd></div>
+            <div><dt>Held</dt><dd>Yes — procedure must not be arbitrary, linking Arts. 14, 19 and 21.</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section id="subjects" class="section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">The syllabus</p>
+          <h2>Six subjects, fully covered</h2>
+        </div>
+        <ul class="subject-grid">
+          <% @subjects.each do |subject| %>
+            <li>
+              <%= link_to subject_path(subject), class: "subject-card" do %>
+                <span class="subject-code"><%= subject.code %></span>
+                <h3><%= subject.name %></h3>
+                <p><%= subject.blurb %></p>
+                <span class="subject-link">View subject <span aria-hidden="true">→</span></span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </section>
+
+    <section id="datesheet" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Datesheet · December 2026</p>
+          <h2>Semester III end-term exams</h2>
+        </div>
+        <div class="datesheet-wrap">
+          <table class="datesheet">
+            <thead>
+              <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Code</th>
+                <th scope="col">Examination</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+                <th scope="col">Day</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @exams.each_with_index do |exam, i| %>
+                <tr>
+                  <td><%= i + 1 %></td>
+                  <td class="datesheet-code"><%= exam.paper_code %></td>
+                  <th scope="row">
+                    <% if exam.subject %>
+                      <%= link_to exam.name, subject_path(exam.subject) %>
+                    <% else %>
+                      <%= exam.name %>
+                    <% end %>
+                  </th>
+                  <td><time datetime="<%= exam.date.iso8601 %>"><%= exam.date.strftime("%d/%m/%Y") %></time></td>
+                  <td><%= exam.time %></td>
+                  <td><%= exam.day %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Resources</p>
+          <h2>Built for how law students actually study</h2>
+        </div>
+        <div class="feature-grid">
+          <% @features.each_with_index do |feature, i| %>
+            <article class="feature">
+              <span class="feature-num"><%= format("%02d", i + 1) %></span>
+              <h3><%= feature[:title] %></h3>
+              <p><%= feature[:body] %></p>
+            </article>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">How it works</p>
+          <h2>From lecture to exam hall in three steps</h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <h3>Pick a subject</h3>
+            <p>Every unit mirrors the university syllabus, so you always know where you are.</p>
+          </li>
+          <li>
+            <h3>Read, then brief</h3>
+            <p>Work through the notes and pair each topic with its leading cases.</p>
+          </li>
+          <li>
+            <h3>Test yourself</h3>
+            <p>Attempt past questions under time and compare against the answer outlines.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="start" class="cta">
+      <div class="container cta-inner">
+        <h2>Ready for the semester?</h2>
+        <p>Start with any subject — no sign-up needed to browse.</p>
+        <a href="#subjects" class="btn btn-light">Start revising</a>
+      </div>
+    </section>
+  </main>
+
+  <%= render "shared/footer" %>
+</div>
